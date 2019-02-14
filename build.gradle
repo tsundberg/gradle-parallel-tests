@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenLocal()
+
+        dependencies {
+            classpath 'se.thinkcode:gradle-cucumber-runner:0.0.1'
+        }
+    }
+}
+
+plugins {
+    id 'java'
+    id 'se.thinkcode.cucumber-runner' version '0.0.1'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+project.ext {
+    cucumberVersion = '4.2.0'
+}
+
+dependencies {
+    compile 'junit:junit:4.12'
+
+    compile 'io.cucumber:cucumber-java:' + cucumberVersion
+}
+
+test {
+    testLogging.showStandardStreams = true
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+}
+
+repositories {
+    mavenCentral()
+}
+
+cucumber {
+    glue = 'classpath:se.thinkcode'
+    threads = '4'
+}
