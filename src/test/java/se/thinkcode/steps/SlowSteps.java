@@ -1,7 +1,12 @@
 package se.thinkcode.steps;
 
 import cucumber.api.java.en.Given;
+import se.thinkcode.ResourceLocator;
 import se.thinkcode.Slow;
+
+import java.net.URL;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SlowSteps {
     @Given("a wanted execution time of {int} seconds")
@@ -21,5 +26,15 @@ public class SlowSteps {
 
         long executionTime = System.currentTimeMillis() - start;
         System.out.println("Done " + wantedExecutionTime + ". It took " + executionTime + "ms");
+    }
+
+    @Given("a resource should be possible to find")
+    public void a_resource_should_be_possible_to_find() {
+        ResourceLocator resourceLocator = new ResourceLocator();
+
+        URL sample = resourceLocator.findSample();
+        assertThat(sample).isNotNull();
+
+        System.out.println(sample.getFile());
     }
 }
